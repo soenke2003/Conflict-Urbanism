@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mapbox Side-by-Side Comparison</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Mapbox GL JS and Compare Plugin -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.css">
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.js"></script>
+
+    <style>
+        body { margin: 0; padding: 0; }
+        #comparison-container {
+            position: absolute;
+            top: 0; bottom: 0; left: 0; right: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        #left-map, #right-map {
+            width: 100%;
+            height: 100%;
+        }
+        .layer-controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255,255,255,0.95);
+            padding: 12px;
+            border-radius: 8px;
+            z-index: 10;
+            font-family: sans-serif;
+            max-width: 320px;
+        }
+        .layer-controls h3 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+        }
+        .layer-controls button {
+            margin: 4px 0;
+            padding: 6px 10px;
+            width: 100%;
+            text-align: left;
+            font-size: 14px;
+        }
+        .layer-controls hr {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="layer-controls">
+        <h3>Toggle Layers (Left Map)</h3>
+        <button onclick="toggleLayer(leftMap, 'Reported Education and Child Welfare Services')">Reported Education and Child Welfare Services</button>
+        <button onclick="toggleLayer(leftMap, 'Reported Health and Human Services Facilities')">Reported Health and Human Services Facilities</button>
+        <button onclick="toggleLayer(leftMap, 'Reported Core Infrastructure')">Reported Core Infrastructure</button>
+        <button onclick="toggleLayer(leftMap, 'Reported Sites in the Adminstration of Government')">Reported Sites in the Adminstration of Government</button>
+        <button onclick="toggleLayer(leftMap, 'Reported Public Safety and Emergency Services')">Reported Public Safety and Emergency Services</button>
+        <button onclick="toggleLayer(leftMap, 'Reported Libraries and Cultural Program Sites')">Reported Libraries and Cultural Program Sites</button>
+        <button onclick="toggleLayer(leftMap, 'Reported Parks and Gardens in Redhook')">Reported Parks and Gardens in Redhook</button>
+        <button onclick="toggleLayer(leftMap, 'Team Researched Activity Sites')">Team Researched Activity Sites</button>
+        <button onclick="toggleLayer(leftMap, 'Red Hook Houses')">Red Hook Houses</button>
+        <button onclick="toggleLayer(leftMap, 'New Utrecht and South Brooklyn High Schools')">New Utrecht and South Brooklyn High Schools</button>
+        <hr>
+        <h3>Toggle Layers (Right Map)</h3>
+        <button onclick="toggleLayer(rightMap, 'Education Youth Services and Child Welfare Relevant to Client')">Education Youth Services and Child Welfare Relevant to Client</button>
+        <button onclick="toggleLayer(rightMap, 'Health and Human Services For Client')">Health and Human Services For Client</button>
+        <button onclick="toggleLayer(rightMap, 'Core infrastructure relevant to client')">Core infrastructure relevant to client</button>
+        <button onclick="toggleLayer(rightMap, 'Adminstration of Government Relevant to Client')">Adminstration of Government Relevant to Client</button>
+        <button onclick="toggleLayer(rightMap, 'Public Safety and Emergency Services Relevant for Client')">Public Safety and Emergency Services Relevant for Client</button>
+        <button onclick="toggleLayer(rightMap, 'Libraries and Cultural Programs Relevant For Client')">Libraries and Cultural Programs Relevant For Client</button>
+        <button onclick="toggleLayer(rightMap, 'Gardens and Parks Relevant For Client')">Gardens and Parks Relevant For Client</button>
+        <button onclick="toggleLayer(rightMap, 'Team Researched Activity Sites')">Team Researched Activity Sites</button>
+        <button onclick="toggleLayer(rightMap, 'Red Hook Houses')">Red Hook Houses</button>
+        <button onclick="toggleLayer(rightMap, 'New Utrecht and South Brooklyn High Schools')">New Utrecht and South Brooklyn High Schools</button>
+    </div>
+    <div id="comparison-container">
+        <div id="left-map"></div>
+        <div id="right-map"></div>
+    </div>
+
+    <script>
+        // Set your Mapbox access token
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic29lbmtlMjAwMyIsImEiOiJjbWFkMXJ0NDMwOW9vMmxxOGptNWZ5ZmZ1In0.mHKK_CmO3idngOXd8bHyBw';
+
+        // Set your published Mapbox style URLs
+        const leftStyle = 'mapbox://styles/soenke2003/cmahoj8l500g701s81xvugkc8';
+        const rightStyle = 'mapbox://styles/soenke2003/cmahqcpv800d501s1gx41gbdi';
+
+        // Set your initial map center and zoom
+        const mapCenter = [-74.0071077835969, 40.67590824803115]; // [longitude, latitude]
+        const mapZoom = 14; // Your zoom value "27398" is not valid, typical values are 0-22
+
+        // Initialize the two maps
+        const leftMap = new mapboxgl.Map({
+            container: 'left-map',
+            style: leftStyle,
+            center: mapCenter,
+            zoom: mapZoom
+        });
+
+        const rightMap = new mapboxgl.Map({
+            container: 'right-map',
+            style: rightStyle,
+            center: mapCenter,
+            zoom: mapZoom
+        });
+
+        // Add the compare slider
+        new mapboxgl.Compare(leftMap, rightMap, {
+            orientation: 'vertical',
+            mousemove: true
+        });
+
+        // Layer toggle function
+        function toggleLayer(map, layerId) {
+            if (map.getLayer(layerId)) {
+                const visibility = map.getLayoutProperty(layerId, 'visibility');
+                map.setLayoutProperty(layerId, 'visibility',
+                    visibility === 'visible' || visibility === undefined ? 'none' : 'visible'
+                );
+            } else {
+                alert(`Layer "${layerId}" not found in this map style.`);
+            }
+        }
+    </script>
+</body>
+</html>
