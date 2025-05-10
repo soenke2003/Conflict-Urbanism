@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Red Hook Maps Comparison</title>
+<title>Swipe between maps with Legend</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.js"></script>
@@ -25,52 +25,70 @@ body { margin: 0; padding: 0; overflow: hidden; }
     position: absolute;
     top: 10px;
     left: 10px;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.95);
     padding: 10px;
     border-radius: 4px;
     z-index: 10;
     font-family: sans-serif;
-    max-width: 300px;
-    max-height: 80vh;
+    max-width: 350px;
+    max-height: 90vh;
     overflow-y: auto;
 }
 .layer-controls h3 {
     margin: 5px 0;
 }
+.layer-toggle-row {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+}
+.legend-key {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-right: 8px;
+    border-radius: 3px;
+    border: 1px solid #888;
+}
 .layer-controls button {
-    display: block;
-    margin: 3px 0;
-    padding: 5px;
-    width: 100%;
-    text-align: left;
+    flex: 1;
+    padding: 5px 8px;
+    margin-left: 5px;
+    font-size: 14px;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    background: #f9f9f9;
+    cursor: pointer;
+}
+.layer-controls button:active {
+    background: #e0e0e0;
 }
 </style>
 </head>
 <body>
 <div class="layer-controls">
     <h3>Left Map Layers</h3>
-    <button onclick="toggleLayer(beforeMap, 'Reported Education and Child Welfare Services')">Education & Child Welfare</button>
-    <button onclick="toggleLayer(beforeMap, 'Reported Health and Human Services Facilities')">Health & Human Services</button>
-    <button onclick="toggleLayer(beforeMap, 'Reported Core Infrastructure')">Core Infrastructure</button>
-    <button onclick="toggleLayer(beforeMap, 'Reported Sites in the Adminstration of Government')">Government Admin</button>
-    <button onclick="toggleLayer(beforeMap, 'Reported Public Safety and Emergency Services')">Public Safety</button>
-    <button onclick="toggleLayer(beforeMap, 'Reported Libraries and Cultural Program Sites')">Libraries & Cultural</button>
-    <button onclick="toggleLayer(beforeMap, 'Reported Parks and Gardens in Redhook')">Parks & Gardens</button>
-    <button onclick="toggleLayer(beforeMap, 'Team Researched Activity Sites')">Research Sites</button>
-    <button onclick="toggleLayer(beforeMap, 'Red Hook Houses')">Red Hook Houses</button>
-    <button onclick="toggleLayer(beforeMap, 'New Utrecht and South Brooklyn High Schools')">High Schools</button>
-    
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#9a00db"></span><button onclick="toggleLayer(beforeMap, 'Reported Education and Child Welfare Services')">Education & Child Welfare</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#d500ff"></span><button onclick="toggleLayer(beforeMap, 'Reported Health and Human Services Facilities')">Health & Human Services</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#ff9100"></span><button onclick="toggleLayer(beforeMap, 'Reported Core Infrastructure')">Core Infrastructure</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#ff00cc"></span><button onclick="toggleLayer(beforeMap, 'Reported Sites in the Adminstration of Government')">Government Admin</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#0900ff"></span><button onclick="toggleLayer(beforeMap, 'Reported Public Safety and Emergency Services')">Public Safety</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#10dbff"></span><button onclick="toggleLayer(beforeMap, 'Reported Libraries and Cultural Program Sites')">Libraries & Cultural</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#2fff15"></span><button onclick="toggleLayer(beforeMap, 'Reported Parks and Gardens in Redhook')">Parks & Gardens</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#2fff15"></span><button onclick="toggleLayer(beforeMap, 'Team Researched Activity Sites')">Research Sites</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#e1ff00"></span><button onclick="toggleLayer(beforeMap, 'Red Hook Houses')">Red Hook Houses</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#ff6600"></span><button onclick="toggleLayer(beforeMap, 'New Utrecht and South Brooklyn High Schools')">High Schools</button></div>
     <h3>Right Map Layers</h3>
-    <button onclick="toggleLayer(afterMap, 'Education Youth Services and Child Welfare Relevant to Client')">Education & Child Welfare</button>
-    <button onclick="toggleLayer(afterMap, 'Health and Human Services For Client')">Health & Human Services</button>
-    <button onclick="toggleLayer(afterMap, 'Core infrastructure relevant to client')">Core Infrastructure</button>
-    <button onclick="toggleLayer(afterMap, 'Adminstration of Government Relevant to Client')">Government Admin</button>
-    <button onclick="toggleLayer(afterMap, 'Public Safety and Emergency Services Relevant for Client')">Public Safety</button>
-    <button onclick="toggleLayer(afterMap, 'Libraries and Cultural Programs Relevant For Client')">Libraries & Cultural</button>
-    <button onclick="toggleLayer(afterMap, 'Gardens and Parks Relevant For Client')">Parks & Gardens</button>
-    <button onclick="toggleLayer(afterMap, 'Team Researched Activity Sites')">Research Sites</button>
-    <button onclick="toggleLayer(afterMap, 'Red Hook Houses')">Red Hook Houses</button>
-    <button onclick="toggleLayer(afterMap, 'New Utrecht and South Brooklyn High Schools')">High Schools</button>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#9a00db"></span><button onclick="toggleLayer(afterMap, 'Education Youth Services and Child Welfare Relevant to Client')">Education & Child Welfare</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#d500ff"></span><button onclick="toggleLayer(afterMap, 'Health and Human Services For Client')">Health & Human Services</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#ff9100"></span><button onclick="toggleLayer(afterMap, 'Core infrastructure relevant to client')">Core Infrastructure</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#ff00cc"></span><button onclick="toggleLayer(afterMap, 'Adminstration of Government Relevant to Client')">Government Admin</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#0900ff"></span><button onclick="toggleLayer(afterMap, 'Public Safety and Emergency Services Relevant for Client')">Public Safety</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#10dbff"></span><button onclick="toggleLayer(afterMap, 'Libraries and Cultural Programs Relevant For Client')">Libraries & Cultural</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#2fff15"></span><button onclick="toggleLayer(afterMap, 'Gardens and Parks Relevant For Client')">Parks & Gardens</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#9a00db"></span><button onclick="toggleLayer(afterMap, 'Team Researched Activity Sites')">Research Sites</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#e1ff00"></span><button onclick="toggleLayer(afterMap, 'Red Hook Houses')">Red Hook Houses</button></div>
+    <div class="layer-toggle-row"><span class="legend-key" style="background:#ff6600"></span><button onclick="toggleLayer(afterMap, 'New Utrecht and South Brooklyn High Schools')">High Schools</button></div>
 </div>
 
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.js"></script>
@@ -84,18 +102,17 @@ body { margin: 0; padding: 0; overflow: hidden; }
     const beforeMap = new mapboxgl.Map({
         container: 'before',
         style: 'mapbox://styles/soenke2003/cmahoj8l500g701s81xvugkc8',
-        center: [-74.0071077835969, 40.67590824803115], // [longitude, latitude]
-        zoom: 14 // Using a reasonable zoom level instead of 27398
+        center: [-74.0071077835969, 40.67590824803115],
+        zoom: 14
     });
 
     const afterMap = new mapboxgl.Map({
         container: 'after',
         style: 'mapbox://styles/soenke2003/cmahqcpv800d501s1gx41gbdi',
-        center: [-74.0071077835969, 40.67590824803115], // [longitude, latitude]
-        zoom: 14 // Using a reasonable zoom level
+        center: [-74.0071077835969, 40.67590824803115],
+        zoom: 14
     });
 
-    // Layer toggle function
     function toggleLayer(map, layerId) {
         if (map.getLayer(layerId)) {
             const visibility = map.getLayoutProperty(layerId, 'visibility');
@@ -109,21 +126,13 @@ body { margin: 0; padding: 0; overflow: hidden; }
         }
     }
 
-    // A selector or reference to HTML element
-    const container = '#comparison-container';
-
-    // Wait for both maps to load before creating the comparison
     beforeMap.on('load', function() {
         afterMap.on('load', function() {
-            // Create the map comparison with vertical slider
-            const map = new mapboxgl.Compare(beforeMap, afterMap, container, {
-                // Set this to enable comparing two maps by mouse movement:
-                // mousemove: true
-                orientation: 'vertical' // vertical slider for horizontal comparison
+            new mapboxgl.Compare(beforeMap, afterMap, '#comparison-container', {
+                orientation: 'vertical'
             });
         });
     });
 </script>
-
 </body>
 </html>
