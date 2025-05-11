@@ -2,12 +2,15 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Swipe between maps with Dark Collapsible Legends</title>
+<title>Swipe between maps with Custom Diamond Slider</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.js"></script>
 <!-- Montserrat font -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Mapbox Compare plugin CSS & JS -->
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.css" type="text/css">
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.js"></script>
 <style>
 body { 
     margin: 0; 
@@ -101,6 +104,37 @@ body {
     font-size: 12px;
     cursor: pointer;
     color: #fff;
+}
+/* --- CUSTOM DIAMOND SLIDER HANDLE --- */
+.mapboxgl-compare .compare-swiper {
+    background: transparent !important;
+    border: none !important;
+    width: 32px !important;
+    height: 48px !important;
+    box-shadow: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    padding: 0;
+}
+/* Diamond (two triangles, black) */
+.mapboxgl-compare .compare-swiper:before,
+.mapboxgl-compare .compare-swiper:after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    margin-left: auto;
+    margin-right: auto;
+}
+.mapboxgl-compare .compare-swiper:before {
+    border-bottom: 18px solid #111; /* top triangle */
+}
+.mapboxgl-compare .compare-swiper:after {
+    border-top: 18px solid #111; /* bottom triangle */
 }
 </style>
 </head>
@@ -223,8 +257,6 @@ body {
     </div>
 </div>
 
-<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.js"></script>
-<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.css" type="text/css">
 <div id="comparison-container">
     <div id="before" class="map"></div>
     <div id="after" class="map"></div>
